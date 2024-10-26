@@ -1,8 +1,0 @@
-@media (max-width: 948px) {
-    .main-qr {
-        flex-direction: column !important;
-    }
-    .log-section, .scanning-section{
-        width: 100% !important;
-    }
-  }
