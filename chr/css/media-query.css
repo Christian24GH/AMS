@@ -1,8 +1,15 @@
 @media (max-width: 948px) {
     .main-qr {
-        flex-direction: column !important;
+        flex-direction: column-reverse !important;
+        height: auto !important;
     }
     .log-section, .scanning-section{
         width: 100% !important;
     }
-  }
+}
+@media (max-width: 306px){
+    .action{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}

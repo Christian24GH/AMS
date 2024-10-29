@@ -137,9 +137,7 @@ body{
     align-items: center;
     justify-content: center;
     aspect-ratio: 1/1;
-    height: 50px;
-    border: 1px solid var(--Secondary);
-    border-radius: 4px;
+    height: 3em;
 }
 .menu-btn .burger{
     aspect-ratio: 1/1;
@@ -151,10 +149,11 @@ body{
     align-items: center;
 }
 #navbar .heading .title{
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 1em; 
 }
 
 #sidebar-offcanvas{
@@ -175,6 +174,8 @@ body{
 .log-section{
     width: 25%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
     position: relative;
 }
 
@@ -185,10 +186,13 @@ body{
 .log-section .payment-items, .log-section .payment-amount{
     width: 100%;
 }
+.payment-items{
+   flex-grow: 2;
+}
 
 .action{
     width: 100%;
-    position: absolute;
+    position: relative;
     bottom: 0;
 }
 
@@ -198,24 +202,30 @@ body{
 
 .action button.btn{
     width: 100% !important;
+    height: 100% !important;
+    font-size: 1em;
+    text-wrap: wrap;
 }
 
 .scanning-section{
     width: 75%;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 #reader{
-    width: 400px;
+    width: 75vh;
     aspect-ratio: 1/1;
     border: 1px solid var(--Secondary);
     background-color: black;
+    height: 100% !important;
 }
 #reader video{
     width: 100% !important;
+    height: 100%;
 }
 
 .conn_err{

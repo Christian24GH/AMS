@@ -111,11 +111,21 @@ function approve(){
             fd.append("items[]", el)
         });
 
-        console.log(fd.get('studID'));
-        camera_start();
+        insert_data(fd);
+        
     }else{
         alert("empty field");
     }
+}
+function insert_data(formdata) {
+    fetch("script/fetch/insert.php", {
+        method: "POST",
+        body: formdata
+    }).then(result=>{
+        return result.json();
+    }).then(data=>{
+        alert(data.status);
+    });
 }
 
 document.getElementById("rescan").addEventListener("click", restart)
