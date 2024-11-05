@@ -106,10 +106,7 @@ function approve(){
         fd.append('studFN', studObj["studFN"]);
         fd.append('studM', studObj["studM"]);
         fd.append('amount', studObj["amount"]);
-        
-        studObj["items"].forEach(el=>{
-            fd.append("items[]", el)
-        });
+        fd.append('items', JSON.stringify(studObj['items']));
 
         insert_data(fd);
         
@@ -124,7 +121,7 @@ function insert_data(formdata) {
     }).then(result=>{
         return result.json();
     }).then(data=>{
-        alert(data.status);
+        alert(data.result);
     });
 }
 

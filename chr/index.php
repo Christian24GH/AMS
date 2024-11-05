@@ -14,6 +14,7 @@
 <body class="poppins-regular">
     <?php 
         include 'conn.php';
+        include 'components/session.php';
         include 'components/header.php';
         include 'components/left-nav.php';
         include 'components/container.php';
