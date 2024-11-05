@@ -83,9 +83,6 @@
             $response['result'] = "Failed to complete transaction: " . $e->getMessage();
             echo json_encode($response);
         }
-
-        
-        
     }
     getPost();
 ?>
