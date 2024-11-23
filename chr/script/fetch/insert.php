@@ -25,7 +25,8 @@
 
     function getPost() {
         if (isset($_POST["items"]) && isset($_SESSION['id'])) {
-            include '../../conn.php';
+            $root = $_SERVER['DOCUMENT_ROOT'];
+            include "$root/ams/chr/conn.php";
             
             // Retrieve and sanitize POST data
             $transaction = new Transaction(

@@ -34,7 +34,7 @@
                     <form id="login_form">
                         <div class="input-box">
                             <input id="id_field" name="studID_field" type="text" autocomplete="false">
-                            <label for="id_field">Student ID</label>
+                            <label for="id_field">Cashier ID</label>
                             <i class='bx bxs-user'></i>
                         </div>
                         <div class="input-box">

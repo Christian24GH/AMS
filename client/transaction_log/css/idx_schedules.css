@@ -1,0 +1,6 @@
+/*
+    Contains local css used by idx_schedules.php
+*/
+.appointment_list_buttons, .sched-items *{
+    cursor: pointer;
+}

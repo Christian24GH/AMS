@@ -1,0 +1,21 @@
+@media (max-width: 768px) {
+    .text-input-name{
+        flex-direction: column !important;
+    }
+    .text-input-name *{
+        width: 100%;
+    }
+    #appointment_info{
+        flex-direction: column-reverse;
+    }
+    #flex-end{
+        justify-content: center !important;
+    }
+    #m_vertical{
+        flex-direction: column !important;
+    }
+    .accodion_paddingX{
+        padding-left: calc(1rem * .25) !important;
+        padding-right: calc(1rem * .25) !important;
+    }
+}
