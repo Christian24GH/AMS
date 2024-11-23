@@ -49,8 +49,8 @@
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'loquezchristian@gmail.com';
-        $mail->Password = 'xafngnzrbphwsiyy';
+        $mail->Username = 'amsgroupcorporation24@gmail.com';
+        $mail->Password = 'lxpuwyjfrwurwrqg';
         $mail->SMTPSecure = 'ssl';
         $mail->Port = 465;
         $mail->setFrom("loquezchristian@gmail.com");
