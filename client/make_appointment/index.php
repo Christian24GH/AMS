@@ -54,9 +54,7 @@
     </div>
     
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src='js/qr.js'></script>
-    <!--<script src='js/date.js'></script> -->
-   
+    <script src='js/qr.js'></script>   
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <script>
         const today = new Date();
@@ -72,9 +70,14 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridWeek',
                 themeSystem: 'bootstrap5',
+                expandRows: true,
                 validRange:{
                     start: startDate.toISOString().split('T')[0],
                     end: endDate.toISOString().split('T')[0]
+                },
+                headerToolbar: {
+                    left: 'title',          
+                    right: 'dayGridMonth,dayGridWeek,listWeek prev,today,next'
                 },
                 selectAllow: function(date) {
                     var isSunday = date.start.getDay() === 0;

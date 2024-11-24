@@ -18,6 +18,7 @@
         padding-left: calc(1rem * .25) !important;
         padding-right: calc(1rem * .25) !important;
     }
+    
     .fc-header-toolbar.fc-toolbar{
         display: flex;
         flex-direction: column !important;
@@ -28,10 +29,30 @@
         align-items: center;
         width: 100%;
     }
-    .fc-toolbar-chunk:last-of-type{
-        justify-content: space-between;
-    }
+    
     .main-container{
         width: auto !important;
+    }
+    #calendar{
+        height: 500px;
+        margin: 0 !important;
+    }
+}
+@media (max-width: 320px) {
+    .fc-toolbar-chunk:last-of-type{
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .fc-toolbar-chunk:last-of-type .fc-button-group{
+        width: 100%;
+        margin: 0;
+    }
+    .fc-button-group{
+        display: flex !important;
+    }
+    .fc-button-group .fc-button{
+        flex:1 !important;
+        width: 30%;
     }
 }

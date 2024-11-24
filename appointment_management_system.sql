@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2024 at 11:06 AM
+-- Generation Time: Nov 24, 2024 at 11:57 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,7 +34,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `makeAppointment` (IN `p_stud_id` IN
 	END;
 	START TRANSACTION;
 		INSERT INTO qr_data(item_string, amount, stud_ln, stud_fn, stud_m)
-		VALUES(p_item_string, p_amount, p_stud_ln, p_stud_fn, p_stud_m);
+		SELECT 
+		    p_item_string, 
+		    p_amount, 
+		    s.stud_ln, 
+		    s.stud_fn, 
+		    s.stud_m
+		From student s
+		WHERE s.stud_id = p_stud_id;
 		SET new_qr_id = LAST_INSERT_ID();
 		
 		IF shift_type = 'Morning' THEN
@@ -212,8 +219,10 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`appointment_id`, `appointment_date`, `status`, `qr_id`, `stud_id`, `shift_id`) VALUES
-(115, '2024-11-25', 'Waiting', 104, 1, 78),
-(116, '2024-11-25', 'Waiting', 105, 1, 79);
+(117, '2024-11-25', 'Waiting', 106, 1, 80),
+(118, '2024-11-25', 'Waiting', 107, 2, 81),
+(119, '2024-11-26', 'Waiting', 108, 2, 82),
+(120, '2024-11-26', 'Waiting', 109, 1, 83);
 
 --
 -- Triggers `appointments`
@@ -354,14 +363,6 @@ CREATE TABLE `notifications` (
   `stud_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `notifications`
---
-
-INSERT INTO `notifications` (`notif_id`, `notify_time`, `is_sent`, `created_at`, `appointment_id`, `stud_id`) VALUES
-(1230, '2024-11-13 07:00:00', 1, '2024-11-23 02:19:54', 115, 1),
-(1231, '2024-11-13 11:00:00', 1, '2024-11-23 02:19:54', 116, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -492,7 +493,11 @@ INSERT INTO `qr_data` (`qr_id`, `item_string`, `amount`, `stud_ln`, `stud_fn`, `
 (102, '1234', 1600.00, 'Alia', 'Christian', 'A'),
 (103, '1234', 1600.00, 'Alia', 'Christian', 'A'),
 (104, '1234', 1600.00, 'Bola', 'Christian', 'A'),
-(105, '1234', 1600.00, 'Bola', 'Christian', 'Alia');
+(105, '1234', 1600.00, 'Bola', 'Christian', 'Alia'),
+(106, '1234', 1600.00, 'Bola', 'Christian', 'A'),
+(107, '1234', 1600.00, 'Roque', 'Jamie', 'G'),
+(108, '1234 5679 9889 10003', 1600.00, 'Roque', 'Jamie', 'G'),
+(109, '5679', 1600.00, 'Bola', 'Christian', 'A');
 
 -- --------------------------------------------------------
 
@@ -590,8 +595,10 @@ CREATE TABLE `shifts` (
 --
 
 INSERT INTO `shifts` (`shift_id`, `shift_type`, `start_time`, `end_time`) VALUES
-(78, 'Morning', '07:00:00', '11:00:00'),
-(79, 'Afternoon', '11:00:00', '17:00:00');
+(80, 'Morning', '07:00:00', '11:00:00'),
+(81, 'Morning', '07:00:00', '11:00:00'),
+(82, 'Afternoon', '11:00:00', '17:00:00'),
+(83, 'Morning', '07:00:00', '11:00:00');
 
 -- --------------------------------------------------------
 
@@ -829,7 +836,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `cashiers`
@@ -853,7 +860,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `qr_data`
 --
 ALTER TABLE `qr_data`
-  MODIFY `qr_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `qr_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `queue`
@@ -871,7 +878,7 @@ ALTER TABLE `section`
 -- AUTO_INCREMENT for table `shifts`
 --
 ALTER TABLE `shifts`
-  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `transactions`
