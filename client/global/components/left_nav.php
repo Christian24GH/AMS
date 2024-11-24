@@ -37,11 +37,11 @@
                 <a class="outline-none" href="<?php echo BASE_URL;?>/notification/">Notification</a>
             </div>
         </div>
-        <div class="container p-4 d-flex align-items-center justify-content-start bg-body position-absolute start-0 bottom-0" style="height: 3rem;">
-            <a class="features d-flex align-items-center justify-content-center outline-none" href="<?php echo BASE_URL;?>/global/components/logout.php">
-                <img src="<?php echo BASE_URL;?>/global/icons/logout.svg" alt="">
-                Logout
-            </a>
-        </div>
+    </div>
+    <div class="container p-2 ps-4 my-1 bg-body border-top" style="height: 3rem;">
+        <a class="features d-flex align-items-center outline-none gap-1" href="<?php echo BASE_URL;?>/global/components/logout.php">
+            <img src="<?php echo BASE_URL;?>/global/icons/logout.svg" alt="">
+            Logout
+        </a>
     </div>
 </div>

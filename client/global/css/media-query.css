@@ -18,4 +18,20 @@
         padding-left: calc(1rem * .25) !important;
         padding-right: calc(1rem * .25) !important;
     }
+    .fc-header-toolbar.fc-toolbar{
+        display: flex;
+        flex-direction: column !important;
+    }
+    .fc-toolbar-chunk{
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .fc-toolbar-chunk:last-of-type{
+        justify-content: space-between;
+    }
+    .main-container{
+        width: auto !important;
+    }
 }

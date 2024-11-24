@@ -1,0 +1,10 @@
+
+  
+#calendar {
+  margin: 40px auto;
+}
+#calendar a {
+  color: inherit !important;          /* Inherit color from the parent element */
+  text-decoration: none !important;   /* Remove underline */
+}
+

@@ -19,9 +19,6 @@ function upload_appointment_data(obj){
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
             studID: obj.studID,
-            studFirstname: obj.studFirstname,
-            studMiddle: obj.studMiddle,
-            studLastname: obj.studLastname,
             amount: obj.amount,
             itemlist: obj.items,
             date: obj.date,

@@ -31,14 +31,12 @@
         <div id='success_page' class="container text-center p-4">
             <h2 class="mb-4">QR Code Generated Successfully!</h2>
             
-            <!-- Placeholder-->
             <div id="qrPlaceholder" class="qr_placeholder container d-flex justify-content-center align-items-center card bg-secondary placeholder-glow" style="width:15rem; height:15rem;">
                 <span class="placeholder" style='width:15rem; height:15rem;'></span>
             </div>
 
             <a id='btnPlaceholder' class="btn btn-primary disabled placeholder mt-4">Save Appointment</a>
 
-            <!-- QR Code Container and button (hidden initially) -->
             <a id='qr_container' class="qr_container container d-flex justify-content-center align-items-center card d-none" style='width:15rem; height:15rem;' download>
             </a>
             <div id="save_appointment" class="btn btn-primary mt-4 d-none">Save Appointment</div>

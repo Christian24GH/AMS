@@ -1,26 +1,11 @@
-<div id='mk_appt' class="mk_appt">
-    <h3>Add Appointment Schedule</h3>
+<div id='mk_appt' class="mk_appt m-0">
     <form id="clientForm">
-        <div class="card text-inputs">
+        <div class="text-inputs">
             <div class="card-header d-flex justify-content-center poppins-semibold">Appointment Information</div>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="studId" class="poppins-medium">Student ID</label>
-                    <input type="text" class="form-control p-3" id="studId" placeholder="Student ID" required>
-                </div>
-                <div class="text-input-name d-flex gap-1">
-                    <div class="mb-3">
-                        <label for="studFirstname" class="poppins-medium">First</label>
-                        <input type="text" class="form-control p-3" id="studFirstname" placeholder="First name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="studMiddlename" class="poppins-medium">Middle</label>
-                        <input type="text" class="form-control p-3" id="studMiddlename" placeholder="Middle name (optional)">
-                    </div>
-                    <div class="mb-3">
-                        <label for="studLastname" class="poppins-medium">Last</label>
-                        <input type="text" class="form-control p-3" id="studLastname" placeholder="Last name" required>
-                    </div>
+                    <input type="text" class="form-control p-3" id="studId" value='<?php echo $_SESSION['stud_id']?>' placeholder="<?php echo $_SESSION['stud_id']?>" disabled>
                 </div>
                 <div class="mb-3">
                     <label for="amount" class="poppins-medium">Amount</label>
@@ -28,10 +13,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="appt_date" class="poppins-medium">Select appointment date</label>
-                    <select class="form-select form-select p-3" name="appt_date" id="appt_date" required>
-                        <option value="">Appointment Date</option>
-                    </select>
+                    <label for="appt_date" class="poppins-medium">Appointment Date</label>
+                    <input id='appt_date' type="date" class="form-control p-3" disabled>
                 </div>
 
                 <div class="mb-3">

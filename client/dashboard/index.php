@@ -28,10 +28,29 @@
         include "$root/AMS/client/global/components/header.php";
         include "$root/AMS/client/global/components/left_nav.php";
     ?>
-    <div class="container my-5 d-flex justify-content-center">
-        <?php
-            
-        ?>
+    <div class="container-fluid my-2" >
+        <div class="card w-100 p-2 border rounded-top-2" >
+            <div class="w-100 d-flex justify-content-center"><h3>Appointment Management System</h3></div>
+                <div class="card mt-5" style='height: 75vh;'>
+                    <h6 class='card-header text-center'>Available Items</h6>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Items</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php include 'requestHandler/fetchInfo.php';
+                                    fetchItems();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
