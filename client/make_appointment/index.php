@@ -50,7 +50,7 @@
     
     <div class="container-fluid justify-content-center m-0 p-2">
         <h3 class='text-center mt-3'>Add Appointment Schedule</h3>
-        <div id="calendar" class="border"></div>    
+        <div id="calendar" class=""></div>    
     </div>
     
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -59,7 +59,7 @@
     <script>
         const today = new Date();
         var startDate = new Date(today);
-        startDate.setDate(today.getDate() + 1);
+        startDate.setDate(today.getDate());
 
         var endDate = new Date(today);
         endDate.setDate(today.getDate() + 8);
@@ -68,7 +68,7 @@
             var calendarEl = document.getElementById('calendar');
             var datesWithEvents = new Set();
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridWeek',
+                initialView: 'dayGridMonth',
                 themeSystem: 'bootstrap5',
                 expandRows: true,
                 validRange:{
@@ -80,10 +80,6 @@
                     right: 'dayGridMonth,dayGridWeek,listWeek prev,today,next'
                 },
                 selectAllow: function(date) {
-                    var isSunday = date.start.getDay() === 0;
-                    return !isSunday;
-                },
-                eventAllow: function(date) {
                     var isSunday = date.start.getDay() === 0;
                     return !isSunday;
                 },
@@ -109,15 +105,19 @@
                     });
                 },
                 dateClick: function(date){
-                    let appt_date = document.getElementById("appt_date");
-                    var myModal = new bootstrap.Modal(document.getElementById('appt'));
-                    
-                    const eventDate = date.dateStr;
-                    if (!datesWithEvents.has(eventDate)) {
-                        appt_date.value = date.dateStr;
-                        myModal.show();
-                    } else {
-                        alert('You have pending appointments on that date!');
+                    let clickedDate = new Date(date.dateStr);
+                    console.log(clickedDate.getDay());
+                    if(!(clickedDate.getDay() === 0)){
+                        let appt_date = document.getElementById("appt_date");
+                        var myModal = new bootstrap.Modal(document.getElementById('appt'));
+                        
+                        const eventDate = date.dateStr;
+                        if (!datesWithEvents.has(eventDate)) {
+                            appt_date.value = date.dateStr;
+                            myModal.show();
+                        } else {
+                            alert('You have pending appointments on that date!');
+                        }
                     }
                 }
             });

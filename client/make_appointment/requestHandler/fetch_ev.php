@@ -5,7 +5,7 @@
 
     $data = json_decode(file_get_contents("php://input"), true);
     if(isset($data['studID'])){
-        $fetchev = $conn->prepare("SELECT appointment_id, appointment_date FROM appointments WHERE stud_id = ?");
+        $fetchev = $conn->prepare("SELECT appointment_id, appointment_date FROM appointments WHERE stud_id = ? AND status in ('Waiting', 'Queued')");
         $fetchev->bind_param("i", $data['studID']);
         $fetchev->execute();
         $result = $fetchev->get_result();

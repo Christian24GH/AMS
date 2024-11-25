@@ -5,7 +5,7 @@
     if(isset($_SESSION['stud_id']))
     {
         // SELECT * FROM `getuserappointments` WHERE `status` IN ('queued', 'in_progress');
-        $getAppointments = $conn->prepare("SELECT * FROM getuserappointments WHERE stud_id = ? AND `status` = 'Completed' ORDER BY appointment_id ASC;") ;
+        $getAppointments = $conn->prepare("SELECT * FROM getuserappointments WHERE stud_id = ? AND `status` IN ('Completed', 'Void', 'Cancelled') ORDER BY appointment_id ASC;") ;
         $getAppointments->bind_param("i", $_SESSION['stud_id']);
         $getAppointments->execute();
         $result = $getAppointments->get_result();

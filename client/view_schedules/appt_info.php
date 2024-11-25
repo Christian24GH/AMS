@@ -28,6 +28,24 @@
         include "$root/ams/client/global/components/left_nav.php";
         include "$root/ams/client/global/components/loading.php";
     ?>
+    <div class="modal fade" id="confirm" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Notice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Cancel this appointment?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id='delbtn' type="button" class="btn btn-danger" >Delete Appointment</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <input type="hidden" id="appointment_id" value="">
     <div class="container-fluid my-3 d-flex justify-content-center flex-column align-items-center">
         <input id="appt_id" type="hidden" value="<?php echo $appt_id;?>">
         <h4>Appointment Information</h4>
@@ -62,6 +80,7 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
 
@@ -76,22 +95,29 @@
 
                     <div class="card-body">
                         <div id="flex-end" class="d-flex justify-content-end">
-                            <!-- Button Placeholder -->
+                            <!--
+                             Button Placeholder 
                             <div id="buttonPlaceholder" class="placeholder-glow">
                                 <span class="btn btn-primary disabled placeholder">Loading...</span>
                             </div>
-                            <!-- Actual Button -->
+                             Actual Button 
                             <div id="saveButton" class="btn btn-primary d-none">Save code</div>
+                            -->
                         </div>
                     </div>
                 </div>
-                <div id='queue_status' class="card p-2">
-                    <div id="notQue" class="d-flex align-items-center justify-content-center">
-                        <span class="poppins-semibold me-1">Status:  </span> 
+                <div id='queue_status' class="card">
+                    <div class="card-body mt-2">
+                        <div id="notQue" class="d-flex align-items-center justify-content-center">
+                            <span class="poppins-semibold me-1">Status:  </span> 
+                        </div>
+                        <div id="inQue">
+                            <div class="poppins-semibold" >Queue Length:<span class="ms-2" id="qLength"></span></div>
+                            <!--<div class="poppins-semibold" >Queue Place:<span class="ms-2" id="qPlace"></span></div>-->
+                        </div>
                     </div>
-                    <div id="inQue">
-                        <div class="poppins-semibold" >Queue Length:<span class="ms-2" id="qLength"></span></div>
-                        <!--<div class="poppins-semibold" >Queue Place:<span class="ms-2" id="qPlace"></span></div>-->
+                    <div class="card-footer d-flex justify-content-center bg-transparent">
+                        <btn class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirm">Delete Appointment</btn>
                     </div>
                 </div> 
             </div>
@@ -100,5 +126,6 @@
     
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/fetch_info.js"></script>
+    <script src="js/delete.js"></script>
 </body>
 </html>

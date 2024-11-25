@@ -9,3 +9,8 @@
   text-decoration: none !important;   /* Remove underline */
 }
 
+.fc-day-sun:not(.fc-col-header-cell){
+  background-color: hsla(0,0%,82%,.3);
+  pointer-events: none;
+  color: hsla(0,0%,82%,.3); 
+}

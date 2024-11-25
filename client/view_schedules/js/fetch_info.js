@@ -6,6 +6,8 @@
     let appt_amountEl = document.getElementById("amount");
     let appt_items = document.getElementById("appt_items");
     let qLengthEl = document.getElementById("qLength");
+    let appointment_id = document.getElementById("appointment_id");
+    
     // let qPlaceEl = document.getElementById("qPlace");
     const transactionInfo = {
         studID: "",
@@ -49,7 +51,6 @@
             img.addEventListener("load", hideplaceholder);
         }catch(error){
             console.error('QR code generation failed:' + error);
-           
         }
         loadingScreen("hide");
         
@@ -64,24 +65,26 @@
         studIDEl.appendChild(document.createTextNode(data.stud_id));
         stud_nameEl.textContent = `${first_name} ${middle_name}${last_name}`.trim();
         
+
         appt_amountEl.append(document.createTextNode(data.amount));
         qLengthEl.append(document.createTextNode(data.queue_length));
+        appointment_id.value = data.appointment_id;
         // qPlaceEl.append(document.createTextNode(data.position));
 
         console.log(data.status);
         let notQue = document.getElementById("notQue");
         let inQue = document.getElementById("inQue");
         if (data.status !== "Queued") {
-            inQue.classList.add("hide"); // Hide the in-queue element
-            notQue.classList.remove("hide"); // Show the not-queued element if hidden
+            inQue.classList.add("d-none"); // Hide the in-queue element
+            notQue.classList.remove("d-none"); // Show the not-queued element if hidden
         
             // Display the current status in notQue
             const div = document.createElement("div");
             div.textContent = data.status;
             notQue.append(div);
         } else {
-            notQue.classList.add("hide"); // Hide the not-queued element
-            inQue.classList.remove("hide"); // Show the in-queue element if hidden
+            notQue.classList.add("d-none"); // Hide the not-queued element
+            inQue.classList.remove("d-none"); // Show the in-queue element if hidden
         
             // Display appointment details in appt_dateEl (ensure appt_dateEl is defined)
         }
@@ -128,11 +131,32 @@
     }
     function hideplaceholder(){
         document.getElementById("qrPlaceholder").classList.add("d-none");
-        document.getElementById("buttonPlaceholder").classList.add("d-none");
+        //document.getElementById("buttonPlaceholder").classList.add("d-none");
 
         document.getElementById("qr_code").classList.remove("d-none");
-        document.getElementById("saveButton").classList.remove("d-none");
-
+        //document.getElementById("saveButton").classList.remove("d-none");
     }
+    document.getElementById("delbtn").addEventListener("click", ()=>{
+        let appointment_id = document.getElementById("appointment_id");
+        console.log(appointment_id.value);
+        const baseUrl = window.location.origin;
+        fetch(`${baseUrl}/ams/client/view_schedules/requestHandler/delete_appt.php`, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ appointment_id: appointment_id.value })
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            if(data.status === "ok"){
+                window.location.href = baseUrl + "/ams/client/view_schedules/";
+            }else{
+                alert("Appointment Deletion Failed");
+            }
+        });
+    })
     window.addEventListener("load", fetch_appt_data);
 })();
