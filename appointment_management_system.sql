@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2024 at 11:57 AM
+-- Generation Time: Nov 25, 2024 at 02:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -120,6 +120,16 @@ CREATE DEFINER=`christian`@`localhost` PROCEDURE `queue_init` ()   BEGIN
 	    COMMIT;
 END$$
 
+CREATE DEFINER=`christian`@`localhost` PROCEDURE `requeue` ()   BEGIN
+	declare cur_time time default curtime();
+	declare cur_date date default curdate();
+	
+	update 	shifts s
+	SET 	s.shift_type = 'Afternoon', start_time = '11:00:00', end_time = '17:00:00'
+	WHERE 	s.shift_id = (select shift_id from appointments a where  appointment_date = cur_date)
+	AND	s.end_time > cur_time; 
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `transaction_ins` (IN `p_stud_id` INT, IN `p_stud_ln` VARCHAR(25), IN `p_stud_fn` VARCHAR(25), IN `p_stud_m` VARCHAR(25), IN `p_cashier_id` INT, IN `p_amount` INT, OUT `new_transaction_id` INT)   BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
 	BEGIN
@@ -197,6 +207,15 @@ CREATE DEFINER=`christian`@`localhost` PROCEDURE `updateQueuePositionAfterDelete
 	CLOSE queue_cursor;
 END$$
 
+CREATE DEFINER=`christian`@`localhost` PROCEDURE `voidAppointment` ()   BEGIN
+		DECLARE cur_date DATE DEFAULT CURDATE();
+		
+		update 	appointments a
+		set	a.status = 'Void'
+		WHERE 	a.appointment_date < cur_date
+		and	a.attended = 0;
+	END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -208,7 +227,8 @@ DELIMITER ;
 CREATE TABLE `appointments` (
   `appointment_id` int(11) NOT NULL,
   `appointment_date` date NOT NULL,
-  `status` enum('Waiting','Completed','Queued') NOT NULL DEFAULT 'Waiting',
+  `status` enum('Waiting','Completed','Queued','Cancelled','Void') NOT NULL DEFAULT 'Waiting',
+  `attended` tinyint(1) NOT NULL DEFAULT 0,
   `qr_id` int(10) UNSIGNED NOT NULL,
   `stud_id` int(11) NOT NULL,
   `shift_id` int(11) NOT NULL
@@ -218,11 +238,10 @@ CREATE TABLE `appointments` (
 -- Dumping data for table `appointments`
 --
 
-INSERT INTO `appointments` (`appointment_id`, `appointment_date`, `status`, `qr_id`, `stud_id`, `shift_id`) VALUES
-(117, '2024-11-25', 'Waiting', 106, 1, 80),
-(118, '2024-11-25', 'Waiting', 107, 2, 81),
-(119, '2024-11-26', 'Waiting', 108, 2, 82),
-(120, '2024-11-26', 'Waiting', 109, 1, 83);
+INSERT INTO `appointments` (`appointment_id`, `appointment_date`, `status`, `attended`, `qr_id`, `stud_id`, `shift_id`) VALUES
+(118, '2024-11-25', 'Queued', 0, 107, 2, 81),
+(119, '2024-11-26', 'Cancelled', 0, 108, 2, 82),
+(125, '2024-11-18', 'Void', 0, 114, 2, 88);
 
 --
 -- Triggers `appointments`
@@ -321,7 +340,7 @@ CREATE TABLE `getnotification` (
 CREATE TABLE `getuserappointments` (
 `appointment_id` int(11)
 ,`appointment_date` date
-,`status` enum('Waiting','Completed','Queued')
+,`status` enum('Waiting','Completed','Queued','Cancelled','Void')
 ,`qr_id` int(10) unsigned
 ,`stud_id` int(11)
 );
@@ -362,6 +381,15 @@ CREATE TABLE `notifications` (
   `appointment_id` int(11) NOT NULL,
   `stud_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`notif_id`, `notify_time`, `is_sent`, `created_at`, `appointment_id`, `stud_id`) VALUES
+(1232, '2024-11-24 19:00:00', 1, '2024-11-25 00:08:16', 118, 2),
+(1233, '2024-11-25 23:00:00', 1, '2024-11-25 00:08:16', 119, 2),
+(1235, '2024-11-25 19:00:00', 0, '2024-11-25 01:16:30', 125, 2);
 
 -- --------------------------------------------------------
 
@@ -497,7 +525,12 @@ INSERT INTO `qr_data` (`qr_id`, `item_string`, `amount`, `stud_ln`, `stud_fn`, `
 (106, '1234', 1600.00, 'Bola', 'Christian', 'A'),
 (107, '1234', 1600.00, 'Roque', 'Jamie', 'G'),
 (108, '1234 5679 9889 10003', 1600.00, 'Roque', 'Jamie', 'G'),
-(109, '5679', 1600.00, 'Bola', 'Christian', 'A');
+(109, '5679', 1600.00, 'Bola', 'Christian', 'A'),
+(110, '1234', 1600.00, 'Bola', 'Christian', 'A'),
+(111, '', 1600.00, 'Bola', 'Christian', 'A'),
+(112, '', 1500.00, 'Bola', 'Christian', 'A'),
+(113, '', 1600.00, 'Bola', 'Christian', 'A'),
+(114, '1234', 1600.00, 'Roque', 'Jamie', 'G');
 
 -- --------------------------------------------------------
 
@@ -510,6 +543,13 @@ CREATE TABLE `queue` (
   `appointment_id` int(11) NOT NULL,
   `queue_position` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `queue`
+--
+
+INSERT INTO `queue` (`queue_id`, `appointment_id`, `queue_position`) VALUES
+(302, 118, 1);
 
 -- --------------------------------------------------------
 
@@ -530,7 +570,7 @@ CREATE TABLE `queueinformation` (
 ,`shift_type` enum('Morning','Afternoon')
 ,`start_time` time
 ,`end_time` time
-,`status` enum('Waiting','Completed','Queued')
+,`status` enum('Waiting','Completed','Queued','Cancelled','Void')
 ,`position` int(11) unsigned
 ,`queue_length` bigint(21)
 );
@@ -595,10 +635,9 @@ CREATE TABLE `shifts` (
 --
 
 INSERT INTO `shifts` (`shift_id`, `shift_type`, `start_time`, `end_time`) VALUES
-(80, 'Morning', '07:00:00', '11:00:00'),
-(81, 'Morning', '07:00:00', '11:00:00'),
+(81, 'Afternoon', '11:00:00', '17:00:00'),
 (82, 'Afternoon', '11:00:00', '17:00:00'),
-(83, 'Morning', '07:00:00', '11:00:00');
+(88, 'Morning', '07:00:00', '11:00:00');
 
 -- --------------------------------------------------------
 
@@ -836,7 +875,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `cashiers`
@@ -854,19 +893,19 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1232;
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1236;
 
 --
 -- AUTO_INCREMENT for table `qr_data`
 --
 ALTER TABLE `qr_data`
-  MODIFY `qr_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `qr_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `queue`
 --
 ALTER TABLE `queue`
-  MODIFY `queue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=302;
+  MODIFY `queue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
 -- AUTO_INCREMENT for table `section`
@@ -878,7 +917,7 @@ ALTER TABLE `section`
 -- AUTO_INCREMENT for table `shifts`
 --
 ALTER TABLE `shifts`
-  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `shift_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `transactions`
@@ -949,6 +988,11 @@ CREATE DEFINER=`christian`@`localhost` EVENT `callQueueInit` ON SCHEDULE EVERY 1
 
 CREATE DEFINER=`christian`@`localhost` EVENT `notify_upcoming_appointments` ON SCHEDULE EVERY 1 SECOND STARTS '2024-11-23 15:31:55' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
 	call makeNotif();
+END$$
+
+CREATE DEFINER=`christian`@`localhost` EVENT `requeueCheck` ON SCHEDULE EVERY 1 SECOND STARTS '2024-11-25 08:08:22' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+	 CALL requeue();
+	 CALL voidAppointment();
 END$$
 
 DELIMITER ;
