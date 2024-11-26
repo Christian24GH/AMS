@@ -1,5 +1,4 @@
 (()=>{
-
     let studIDEl = document.getElementById("studID");
     let stud_nameEl = document.getElementById("stud_name");
     let appt_dateEl = document.getElementById("appt_date");
@@ -8,16 +7,13 @@
     let qLengthEl = document.getElementById("qLength");
     let appointment_id = document.getElementById("appointment_id");
     
-    // let qPlaceEl = document.getElementById("qPlace");
     const transactionInfo = {
+        appointment_id: "",
         studID: "",
-        studFirstname: "",
-        studMiddle: "",
-        studLastname: "",
         amount: "",
         date: "",
         shift: "",
-        items: []
+        items: [] 
     }
 
     async function fetch_appt_data(){
@@ -42,26 +38,24 @@
     }
     function getQrcode(obj){
         let img = document.getElementById("qr_code");
-        try{
+        try {
             const response = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${JSON.stringify(obj)}`;
-            if(!response){
-                throw new Error(`Error: Service Connection Failed`);
+            if (!response) {
+                throw new Error("Error: Service Connection Failed");
             }
             img.src = response;
             img.addEventListener("load", hideplaceholder);
-        }catch(error){
-            console.error('QR code generation failed:' + error);
+        } catch (error) {
+            console.error("QR code generation failed:", error);
         }
         loadingScreen("hide");
-        
     }
     function assignValues(data){
         console.log(data);
         let first_name = data.first_name || "";
-        let middle_name = data.middle_name ? data.middle_name + " " : "";  // Adds a space after middle name if it exists
+        let middle_name = data.middle_name ? data.middle_name + " " : ""; 
         let last_name = data.last_name || "";
 
-        // Use textContent to append full name in one go
         studIDEl.appendChild(document.createTextNode(data.stud_id));
         stud_nameEl.textContent = `${first_name} ${middle_name}${last_name}`.trim();
         
@@ -69,21 +63,19 @@
         appt_amountEl.append(document.createTextNode(data.amount));
         qLengthEl.append(document.createTextNode(data.queue_length));
         appointment_id.value = data.appointment_id;
-        // qPlaceEl.append(document.createTextNode(data.position));
 
         console.log(data.status);
         let notQue = document.getElementById("notQue");
         let inQue = document.getElementById("inQue");
         if (data.status !== "Queued") {
-            inQue.classList.add("d-none"); // Hide the in-queue element
-            notQue.classList.remove("d-none"); // Show the not-queued element if hidden
-        
-            // Display the current status in notQue
+            inQue.classList.add("d-none"); 
+            notQue.classList.remove("d-none"); 
+            
             const div = document.createElement("div");
             div.textContent = data.status;
             notQue.append(div);
         } else {
-            notQue.classList.add("d-none"); // Hide the not-queued element
+            notQue.classList.add("d-none"); 
             inQue.classList.remove("d-none"); // Show the in-queue element if hidden
         
             // Display appointment details in appt_dateEl (ensure appt_dateEl is defined)
@@ -100,14 +92,19 @@
             appt_items.appendChild(li);
         });
         
-        transactionInfo.studID = data.stud_id;
-        transactionInfo.studFirstname = first_name;
-        transactionInfo.studMiddle = middle_name;
-        transactionInfo.studLastname = last_name;
-        transactionInfo.amount = data.amount;
-        transactionInfo.items = data.items;
+        console.log(data);
+
+        transactionInfo.appointment_id = data.appointment_id;
+        
+        transactionInfo.studID = parseInt(data.stud_id, 10);
+        transactionInfo.amount = parseFloat(data.amount).toFixed(2); 
+
+        transactionInfo.items = decodeURIComponent(data.items).split(" ");
+
         transactionInfo.date = data.appointment_date;
-       
+        transactionInfo.shift = data.shift_type || "";
+
+        console.log("Formatted Transaction Info for QR:", transactionInfo);
     }
     
     function formatTime(timeString) {

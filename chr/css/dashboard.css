@@ -10,6 +10,7 @@
     --Text: #111113;
     --Text-dark: #ececee;
 }
+/*
 .poppins-thin {
     font-family: "Poppins", serif;
     font-weight: 100;
@@ -161,6 +162,7 @@ body{
     border-radius: 8px;
     margin: 5px;
 }
+   
 .main-qr{
     display: flex;
     flex-direction: row;
@@ -206,22 +208,13 @@ body{
     font-size: 1em;
     text-wrap: wrap;
 }
-
-.scanning-section{
-    width: 75%;
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
+ */
 
 #reader{
-    width: 75vh;
+    width: 30vw;
     aspect-ratio: 1/1;
     border: 1px solid var(--Secondary);
     background-color: black;
-    height: 100% !important;
 }
 #reader video{
     width: 100% !important;

@@ -2,6 +2,7 @@
     session_start();
     
     class Transaction {
+        public $appointment_id;
         public $id;
         public $ln;
         public $fn;
@@ -11,7 +12,8 @@
         public $section_id;
         public $cashier_id;
 
-        function __construct($id, $ln, $fn, $mn, $amount, $items, $section_id, $cashier_id) {
+        function __construct($appointment_id, $id, $ln, $fn, $mn, $amount, $items, $section_id, $cashier_id) {
+            $this->appointment_id = $appointment_id;
             $this->id = $id;
             $this->ln = $ln;
             $this->fn = $fn;
@@ -24,12 +26,13 @@
     }
 
     function getPost() {
-        if (isset($_POST["items"]) && isset($_SESSION['id'])) {
+        if (isset($_POST["items"]) && isset($_SESSION['cashier_id'])) {
             $root = $_SERVER['DOCUMENT_ROOT'];
             include "$root/ams/chr/conn.php";
             
             // Retrieve and sanitize POST data
             $transaction = new Transaction(
+                $_POST["appointment_id"] ?? null,
                 $_POST["studID"] ?? null,
                 $_POST["studLN"] ?? '',
                 $_POST["studFN"] ?? '',
@@ -48,36 +51,24 @@
         $response = array();
         header("Content-Type: application/json");
         try {
-            $conn->begin_transaction();
-
             // Insert transaction data using a stored procedure
-            $stmt = $conn->prepare("CALL transaction_ins(?, ?, ?, ?, ?, ?, @new_transaction_id)");
+            $stmt = $conn->prepare("CALL transaction_ins(?, ?, ?)");
             $stmt->bind_param(
-                "isssii",
+                "sii",
+                $transaction->appointment_id,
                 $transaction->id,
-                $transaction->ln,
-                $transaction->fn,
-                $transaction->mn,
-                $transaction->cashier_id,
-                $transaction->amount
+                $transaction->cashier_id
             );
             $stmt->execute();
-            $stmt->close();
-
-            // Retrieve last inserted transaction ID
-            $result = $conn->query("SELECT @new_transaction_id AS lastID");
-            $lastID = $result->fetch_assoc()['lastID'];
 
             // Insert each item associated with the transaction
-            $itemStmt = $conn->prepare("INSERT INTO paid_items(transaction_id, item_id) VALUES (?, ?)");
+            $itemStmt = $conn->prepare("INSERT INTO paid_items(stud_id, item_id, appointment_id) VALUES (?, ?, ?)");
             foreach ($transaction->items as $item) {
-                $itemStmt->bind_param("ii", $lastID, $item);
+                $itemStmt->bind_param("iis", $transaction->id, $item, $transaction->appointment_id);
                 $itemStmt->execute();
             }
             $itemStmt->close();
-
-            $conn->commit();
-            $response['result'] = "Transaction completed successfully.";
+            $response['result'] = "OK";
             echo json_encode($response);
         } catch (Exception $e) {
             $conn->rollback();

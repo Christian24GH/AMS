@@ -5,8 +5,9 @@
     let appt_dateEl = document.getElementById("appt_date");
     let appt_amountEl = document.getElementById("amount");
     let appt_items = document.getElementById("appt_items");
-    let qLengthEl = document.getElementById("qLength");
-    let qPlaceEl = document.getElementById("qPlace");
+    let appointment_id = document.getElementById("appointment_id");
+    
+    // let qPlaceEl = document.getElementById("qPlace");
     const transactionInfo = {
         studID: "",
         studFirstname: "",
@@ -49,51 +50,30 @@
             img.addEventListener("load", hideplaceholder);
         }catch(error){
             console.error('QR code generation failed:' + error);
-           
         }
         loadingScreen("hide");
         
     }
     function assignValues(data){
         console.log(data);
-        let first_name = document.createTextNode(data.first_name);
-        let last_name = document.createTextNode(data.last_name);
-        let middle_name = "";
+        let first_name = data.first_name || "";
+        let middle_name = data.middle_name ? data.middle_name + " " : "";  // Adds a space after middle name if it exists
+        let last_name = data.last_name || "";
 
-        if(!data.middle_name){
-            middle_name = "";
-        }else{
-            middle_name = document.createTextNode(data.middle_name);
-        }
-
+        // Use textContent to append full name in one go
         studIDEl.appendChild(document.createTextNode(data.stud_id));
-        stud_nameEl.append(
-            first_name,
-            " ",
-            middle_name ? middle_name + " " : "",
-            last_name
-        );
+        stud_nameEl.textContent = `${first_name} ${middle_name}${last_name}`.trim();
+        
+
         appt_amountEl.append(document.createTextNode(data.amount));
-        qLengthEl.append(document.createTextNode(data.queue_length));
-        qPlaceEl.append(document.createTextNode(data.position));
+        // qPlaceEl.append(document.createTextNode(data.position));
 
         console.log(data.status);
         let notQue = document.getElementById("notQue");
-        let inQue = document.getElementById("inQue");
-        if (data.status !== "Queued") {
-            inQue.classList.add("hide"); // Hide the in-queue element
-            notQue.classList.remove("hide"); // Show the not-queued element if hidden
-        
-            // Display the current status in notQue
-            const div = document.createElement("div");
-            div.textContent = data.status;
-            notQue.append(div);
-        } else {
-            notQue.classList.add("hide"); // Hide the not-queued element
-            inQue.classList.remove("hide"); // Show the in-queue element if hidden
-        
-            // Display appointment details in appt_dateEl (ensure appt_dateEl is defined)
-        }
+        const div = document.createElement("div");
+        div.textContent = data.status;
+        notQue.append(div);
+
         appt_dateEl.append(
             document.createTextNode(
                 `${formatDate(data.appointment_date)} / ${data.shift_type} Shift ${formatTime(data.start_time)} - ${formatTime(data.end_time)}`
@@ -133,16 +113,14 @@
             loadingOverlay.style.display = "flex"; // Shows the loading screen
         } else if (state === "hide") {
             loadingOverlay.style.display = "none"; // Hides the loading screen
-            console.log("hide");
         }
     }
     function hideplaceholder(){
         document.getElementById("qrPlaceholder").classList.add("d-none");
-        document.getElementById("buttonPlaceholder").classList.add("d-none");
+        //document.getElementById("buttonPlaceholder").classList.add("d-none");
 
         document.getElementById("qr_code").classList.remove("d-none");
-        document.getElementById("saveButton").classList.remove("d-none");
-
+        //document.getElementById("saveButton").classList.remove("d-none");
     }
     window.addEventListener("load", fetch_appt_data);
 })();

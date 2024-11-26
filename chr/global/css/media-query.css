@@ -1,0 +1,58 @@
+@media (max-width: 768px) {
+    .text-input-name{
+        flex-direction: column !important;
+    }
+    .text-input-name *{
+        width: 100%;
+    }
+    #appointment_info{
+        flex-direction: column-reverse;
+    }
+    #flex-end{
+        justify-content: center !important;
+    }
+    #m_vertical{
+        flex-direction: column !important;
+    }
+    .accodion_paddingX{
+        padding-left: calc(1rem * .25) !important;
+        padding-right: calc(1rem * .25) !important;
+    }
+    
+    .fc-header-toolbar.fc-toolbar{
+        display: flex;
+        flex-direction: column !important;
+    }
+    .fc-toolbar-chunk{
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .main-container{
+        width: auto !important;
+    }
+    #calendar{
+        height: 500px;
+        margin: 0 !important;
+    }
+}
+@media (max-width: 320px) {
+    .fc-toolbar-chunk:last-of-type{
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .fc-toolbar-chunk:last-of-type .fc-button-group{
+        width: 100%;
+        margin: 0;
+    }
+    .fc-button-group{
+        display: flex !important;
+    }
+    .fc-button-group .fc-button{
+        flex:1 !important;
+        width: 30%;
+    }
+}

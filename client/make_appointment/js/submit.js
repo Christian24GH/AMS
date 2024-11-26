@@ -1,13 +1,21 @@
 function generateQr(obj) {
-    try{
+    obj.studID = parseInt(obj.studID, 10);
+    obj.amount = parseFloat(obj.amount).toFixed(2);
+
+    if (typeof obj.items === "string") {
+        obj.items = obj.items.split(" ");
+    }
+
+    console.log("Final QR Data:", obj);
+    
+    try {
         const response = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${JSON.stringify(obj)}`;
-        if(!response){
+        if (!response) {
             throw new Error(`Error: Service Connection Failed`);
         }
         return response;
-        
-    }catch(error){
-        console.error('QR code generation failed:' + error);
+    } catch (error) {
+        console.error("QR code generation failed:", error);
         return null;
     }
 }
@@ -18,6 +26,7 @@ function upload_appointment_data(obj){
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
+            appointmentID: obj.appointmentID,
             studID: obj.studID,
             amount: obj.amount,
             itemlist: obj.items,
@@ -30,6 +39,7 @@ function upload_appointment_data(obj){
         if(!result.ok){
             throw new Error("Error:"+ result.error);
         }
+
         alert("Data Inserted");
         disableSaveButton();
     })
@@ -40,12 +50,12 @@ function upload_appointment_data(obj){
 function disableSaveButton() {
     const saveButton = document.getElementById("save_appointment");
 
-    // Disable the button
     saveButton.classList.add("disabled");
 
     // Store the disabled state in localStorage
     localStorage.setItem("saveButtonDisabled", "true");
 }
+
 function appendQR(qr){
     let container = document.getElementById("qr_container");
     let img = document.createElement("img");
@@ -80,10 +90,8 @@ function hideplaceholder(){
 function getInfo(){
     const retrievedData = localStorage.getItem("transactionInfo");
     if (retrievedData) {
-        // Convert the JSON string into a JavaScript object
         return JSON.parse(retrievedData);
     } else {
-        // Return null or an empty object if there's no data in localStorage
         return null; // Or return {} if you prefer an empty object
     }
 }
@@ -98,8 +106,6 @@ function start(){
         alert("Failed to generate QR");
     }
 }
-
-
 
 document.querySelector("#save_appointment").addEventListener("click", e=>{
     e.preventDefault();

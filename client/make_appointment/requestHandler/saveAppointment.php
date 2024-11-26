@@ -10,11 +10,10 @@
         $response['ok'] = true;
         
         $itemlist  = implode(' ', $data['itemlist']);
-        $callProcedure = $conn->prepare("CALL makeAppointment(?, ?, ?, ?, ?, ?, ?, 'Waiting', ?)");
-        $callProcedure->bind_param("issssdss", $data['studID'], $data['studFirstname'], $data['studMiddle'], $data['studLastname'], $itemlist, $data['amount'], $data['date'], $data['shift']);
+        $callProcedure = $conn->prepare("CALL makeAppointment(?, ?, ?, ?, ?, ?, ?, ?, 'Waiting', ?)");
+        $callProcedure->bind_param("sissssdss", $data['appointmentID'], $data['studID'], $data['studFirstname'], $data['studMiddle'], $data['studLastname'], $itemlist, $data['amount'], $data['date'], $data['shift']);
         $callProcedure->execute();
         $callProcedure->close();
-
     } else {
         $response['ok'] = false;
         $response['error'] = "Missing Fields";

@@ -1,3 +1,11 @@
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 function handleAppointment(obj){
     const baseURL = window.location.origin;
     if(obj.studID !== ''){
@@ -11,6 +19,7 @@ function handleAppointment(obj){
 
 //start
 const transactionInfo = {
+    appointmentID: "",
     studID: "",
     amount: "",
     date: "",
@@ -26,8 +35,10 @@ document.getElementById("clientForm").addEventListener("submit", (e)=>{
     let appt_shift = document.getElementById("appt_shift").value;
     let checkboxes = Array.from(document.querySelectorAll("input[type='checkbox']:checked")).map((elem) => elem.value);
     
-    transactionInfo.studID = studId;
-    transactionInfo.amount = amount;
+    transactionInfo.appointmentID = generateUUID();
+    console.log(transactionInfo.appointmentID);
+    transactionInfo.studID = parseInt(studId, 10);
+    transactionInfo.amount = parseFloat(amount).toFixed(2);
     transactionInfo.items = checkboxes;
     transactionInfo.date = appt_date;
     transactionInfo.shift = appt_shift;

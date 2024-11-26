@@ -1,0 +1,101 @@
+/*
+    Contains global css used by the whole client
+*/
+
+:root{
+    --Primary: #191cd7;
+    --Primary-dark: #282ce6;
+    --Secondary: #a6a7bf;
+    --Secondary-dark: #404159;
+    --Accent: #6365d4;
+    --Accent-dark: #2b2d9c;
+    --Background: #f0f0fa;
+    --Background-dark: #05050f;
+    --Text: #111113;
+    --Text-dark: #ececee;
+}
+
+body{
+    background-color: var(--Background) !important;
+}
+
+.hide{
+    display: none !important;
+}
+
+.conn_err{
+    width: 100vw;
+    display: flex;
+    min-height: 10vh;
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    text-wrap: wrap;
+    z-index: 1;
+    background-color: var(--Background);
+}
+/*Header*/
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand{
+    text-wrap: pretty !important;
+}
+
+.menu-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1;
+    height: 4em;
+}
+
+.menu-btn .burger{
+    object-fit: scale-down;
+    width: 2em;
+    height: 2em;
+}
+#ams_header *{
+    background-color: var(--Primary) !important;
+    color: var(--Text-dark) !important;
+}
+#burger path {
+    stroke: #ffffff; /* Change the stroke color to red */
+}
+
+.profilepic{
+    height: 4rem;
+    width: 4rem;
+}
+
+.outline-none, .outline-none:focus, .outline-none:active{
+    text-decoration: none !important;
+    color: black;
+}
+.loading-overlay {
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 1050 !important; /* Higher than Bootstrap modal */
+}
+.features img{
+    width: 2em;
+}
+.features:hover *, .features:hover{
+    color: var(--Accent);
+    transition: all 0.2s ease-in-out;
+}
+.features:hover img{
+    transform: scale(120%, 120%);
+    margin-right: 1rem;
+}
+

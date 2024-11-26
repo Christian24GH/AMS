@@ -59,7 +59,7 @@
     <script>
         const today = new Date();
         var startDate = new Date(today);
-        startDate.setDate(today.getDate());
+        startDate.setDate(today.getDate() + 1);
 
         var endDate = new Date(today);
         endDate.setDate(today.getDate() + 8);

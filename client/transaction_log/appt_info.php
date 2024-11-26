@@ -76,22 +76,13 @@
 
                     <div class="card-body">
                         <div id="flex-end" class="d-flex justify-content-end">
-                            <!-- Button Placeholder -->
-                            <div id="buttonPlaceholder" class="placeholder-glow">
-                                <span class="btn btn-primary disabled placeholder">Loading...</span>
-                            </div>
-                            <!-- Actual Button -->
-                            <div id="saveButton" class="btn btn-primary d-none">Save code</div>
+                            
                         </div>
                     </div>
                 </div>
                 <div id='queue_status' class="card p-2">
                     <div id="notQue" class="d-flex align-items-center justify-content-center">
                         <span class="poppins-semibold me-1">Status:  </span> 
-                    </div>
-                    <div id="inQue">
-                        <div class="poppins-semibold" >Queue Length:<span class="ms-2" id="qLength"></span></div>
-                        <div class="poppins-semibold" >Queue Place:<span class="ms-2" id="qPlace"></span></div>
                     </div>
                 </div> 
             </div>

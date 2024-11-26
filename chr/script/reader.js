@@ -2,6 +2,7 @@ let start_scan_btn = document.getElementById("start-scan-btn");
 let reader_el = document.getElementById("reader");
 
 const studObj = {
+    appointment_id:"",
     studID:"",
     studLN:"",
     studFN:"",
@@ -44,44 +45,55 @@ function camera_start(){
 }
 
 function filter_result(text){
+    console.log("Result: ", JSON.parse(text));
     return transaction = JSON.parse(text);
 }
+async function fetch_name(studID) {
+    const response = await fetch('script/fetch/get_name.php', {
+        method: 'post',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ studID: studID })
+    });
+    return response.json(); // Await and parse the response as JSON
+}
 
-function display_result(transaction){
+async function display_result(transaction) {
     let student_id = document.getElementById("student-id");
+    let appointment_id = document.getElementById("appointment_id");
     let student_name = document.getElementById("student-name");
     let item_list = document.getElementById("item-list");
     let payment_amount = document.getElementById("payment-amount");
 
-    let name = `${transaction["studLN"]}, ${transaction["studFN"]} ${transaction["studM"]}`;
+    const fullname = await fetch_name(transaction["studID"]);
+    
+    let name = `${fullname['stud_ln']}, ${fullname['stud_fn']} ${fullname['stud_m'] || ''}`.trim();
 
-    let studID = document.createTextNode(transaction["studID"]);
-    let studName = document.createTextNode(name);
-    let amount = document.createTextNode(transaction["amount"]);
-
-    student_id.appendChild(studID);
-    student_name.appendChild(studName);
-    payment_amount.appendChild(amount);
-
+    student_id.appendChild(document.createTextNode(transaction["studID"]));
+    student_name.appendChild(document.createTextNode(name));
+    payment_amount.appendChild(document.createTextNode(transaction["amount"]));
+    appointment_id.appendChild(document.createTextNode(transaction["appointment_id"]));
     transaction["items"].forEach(el => {
         item_list.appendChild(document.createTextNode(el));
         item_list.appendChild(document.createElement("br"));
     });
 
+    studObj["appointment_id"] = transaction["appointment_id"];
     studObj["studID"] = transaction["studID"];
-    studObj["studLN"] = transaction["studLN"];
-    studObj["studFN"] = transaction["studFN"];
-    studObj["studM"] = transaction["studM"];
+    studObj["studLN"] = fullname['stud_ln'];
+    studObj["studFN"] = fullname['stud_fn'];
+    studObj["studM"] = fullname['stud_m'];
     studObj["amount"] = transaction["amount"];
     studObj["items"] = transaction["items"];
 }
-
 function restart(){
     let student_id = document.getElementById("student-id");
     let student_name = document.getElementById("student-name");
     let item_list = document.getElementById("item-list");
     let payment_amount = document.getElementById("payment-amount");
-
+    let appointment_id = document.getElementById("appointment_id");
+    while(appointment_id.hasChildNodes()){
+        appointment_id.removeChild(appointment_id.firstChild);
+    }
     while(student_id.hasChildNodes()){
         student_id.removeChild(student_id.firstChild);
     }
@@ -101,6 +113,7 @@ function approve(){
     //if valid, proceed to call a sql insert
     const fd = new FormData();
     if(studObj["studID"]){
+        fd.append('appointment_id', studObj['appointment_id']),
         fd.append('studID', studObj["studID"]);
         fd.append('studLN', studObj["studLN"]);
         fd.append('studFN', studObj["studFN"]);
@@ -121,7 +134,11 @@ function insert_data(formdata) {
     }).then(result=>{
         return result.json();
     }).then(data=>{
-        alert(data.result);
+        if(data.result == "OK"){
+            alert("Transaction Success");
+            console.log(data.result);
+            restart();
+        }
     });
 }
 

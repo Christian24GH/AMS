@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="scanning-section">
-        <div id="reader" class="reader hide"></div>
+        <div id="reader" class="reader" width="600px"></div>
         <div id="start-scan-btn" class="btn btn-primary">Start Scanning</div>
 
         <!--<input type="file" id="qr-input-file" accept="image/*">-->
