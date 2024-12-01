@@ -111,6 +111,8 @@ function restart(){
 function approve(){
     //check if valid
     //if valid, proceed to call a sql insert
+    let cashier_id = document.querySelector("#cashier_id").value;
+    console.log(cashier_id);
     const fd = new FormData();
     if(studObj["studID"]){
         fd.append('appointment_id', studObj['appointment_id']),
@@ -120,7 +122,7 @@ function approve(){
         fd.append('studM', studObj["studM"]);
         fd.append('amount', studObj["amount"]);
         fd.append('items', JSON.stringify(studObj['items']));
-
+        fd.append('cashier_id', cashier_id);
         insert_data(fd);
         
     }else{

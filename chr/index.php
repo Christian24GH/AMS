@@ -29,9 +29,10 @@
         include $root . '/ams/chr/global/components/header.php';
         include $root . '/ams/chr/global/components/left_nav.php';
     ?>
+    <input id="cashier_id" type="hidden" value="<?php echo $_SESSION['cashier_id']?>">
     <div class="container-fluid mt-1" >
         <div class="d-flex flex-row gap-1 ">
-            <div class="card w-25" style="height: calc(90vh - (1rem * 3));">
+            <div class="card w-25 border-1" style="height: calc(90vh - (1rem * 3));">
                 <div class="card-header">Scan Result</div>
                 <div class="card-body">
                     <div class="user-cred">

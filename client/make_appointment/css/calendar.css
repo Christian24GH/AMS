@@ -14,3 +14,15 @@
   pointer-events: none;
   color: hsla(0,0%,82%,.3); 
 }
+.fc-daygrid-day-events{
+  height: 5rem !important;
+  display: flex !important;
+  flex-direction: column;
+}
+.fc-daygrid-day-bottom{
+  flex-grow: 1;
+  display: flex !important;
+  justify-content: end;
+  align-items: end;
+  /*border: 1px solid red;*/
+}

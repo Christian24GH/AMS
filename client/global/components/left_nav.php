@@ -4,14 +4,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body position-relative">
-        <div class="container p-2 profile border d-flex">
+        <div class="container p-2 profile d-flex">
+            <!--
             <div class="w-25 d-flex align-items-center justify-content-center">
                 <div class="profilepic left border rounded-circle border-primary-subtle"></div>
             </div>
+            -->
             <div class="right h-100 ps-2 w-75 d-flex justify-content-center flex-column">
                 <?php
-                    //echo "<h5 class='profilename'>Christian A. Bola</h5>";
-                    //echo "<h6 class='profileid'>123456789</h6>";
+                    echo "<h5 class='profilename'>{$_SESSION['full_name']}</h5>";
+                    echo "<h6 class='profileid'>{$_SESSION['stud_id']}</h6>";
                 ?>
             </div>
         </div>

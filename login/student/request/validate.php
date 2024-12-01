@@ -8,7 +8,7 @@
 
     if(isset($_POST["id"]) && isset($_POST["pass"]))
     {
-        $sql = "SELECT stud_id, stud_password FROM student WHERE stud_id = '{$_POST['id']}'";
+        $sql = "SELECT stud_id, stud_ln, stud_fn, stud_m, stud_password FROM student WHERE stud_id = '{$_POST['id']}'";
         $result = $conn->query($sql);
         if($result->num_rows > 0)
         {
@@ -18,6 +18,8 @@
             if(password_verify($_POST["pass"], $row["stud_password"])){
                 $response['password'] = 1;
                 $_SESSION['stud_conn'] = 'open';
+                $mname = "{$row['stud_m']} " ?? "";
+                $_SESSION['full_name'] = "{$row['stud_fn']} " . "{$mname}" . "{$row['stud_ln']}";
                 $_SESSION['stud_id'] = $row['stud_id'];
             }
             else{

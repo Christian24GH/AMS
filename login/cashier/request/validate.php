@@ -8,7 +8,7 @@
 
     if(isset($_POST["id"]) && isset($_POST["pass"]))
     {
-        $sql = "SELECT cashier_id, password FROM cashiers WHERE cashier_id = '{$_POST['id']}'";
+        $sql = "SELECT cashier_id, cashier_name,password FROM cashiers WHERE cashier_id = '{$_POST['id']}'";
         $result = $conn->query($sql);
         
         if($result->num_rows > 0)
@@ -20,6 +20,7 @@
             if($row["password"] == $_POST["pass"]){
                 $response['password'] = 1;
                 $_SESSION['cashier_con'] = 1;
+                $_SESSION['cashier_name'] = $row['cashier_name'];
                 $_SESSION['cashier_id'] = $row['cashier_id'];
             }
             else{

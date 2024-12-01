@@ -23,6 +23,7 @@
     <title>Dashboard</title>
 </head>
 <body class="poppins-regular">
+    <input type="hidden" id="cashier_id" value="<?php echo $_SESSION['cashier_id']?>">
     <?php 
         include $root . '/ams/chr/global/components/session.php';
         include $root . '/ams/chr/global/components/header.php';
@@ -30,5 +31,6 @@
     ?>
     transactions
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script/transactionlist.js"></script>
 </body>
 </html>

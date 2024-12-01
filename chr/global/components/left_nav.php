@@ -4,14 +4,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body position-relative">
-        <div class="container p-2 profile border d-flex">
+        <div class="container p-2 profile d-flex">
+            <!--
             <div class="w-25 d-flex align-items-center justify-content-center">
                 <div class="profilepic left border rounded-circle border-primary-subtle"></div>
             </div>
+            -->
             <div class="right h-100 ps-2 w-75 d-flex justify-content-center flex-column">
                 <?php
-                    //echo "<h5 class='profilename'>Christian A. Bola</h5>";
-                    //echo "<h6 class='profileid'>123456789</h6>";
+                    echo "<h5 class='profilename'>{$_SESSION['cashier_name']}</h5>";
+                    echo "<h6 class='profileid'>{$_SESSION['cashier_id']}</h6>";
                 ?>
             </div>
         </div>
@@ -20,10 +22,12 @@
                 <img src="<?php echo BASE_URL;?>/global/icons/home-2.svg" alt="">
                 <a class="outline-none" href="<?php echo BASE_URL;?>/">Scanner</a>
             </div>
+            <!--
             <div class="features container w-100 p-2 my-1">
                 <img src="<?php echo BASE_URL;?>/global/icons/invoice.svg" alt="">
                 <a class="outline-none" href="<?php echo BASE_URL;?>/transaction.php">Transaction Log</a>
             </div>
+            -->
         </div>
     </div>
     <div class="container p-2 ps-4 my-1 bg-body border-top" style="height: 3rem;">
