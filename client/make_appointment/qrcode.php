@@ -27,7 +27,7 @@
         include "$root/AMS/client/global/components/left_nav.php";
         include "$root/AMS/client/global/components/loading.php";
     ?>
-    <div class="container my-3 d-flex justify-content-center py-3 border" style="max-width: 40rem;">
+    <div class="container d-flex justify-content-center py-3 margin-top-5" style="max-width: 40rem;">
         <div id='success_page' class="container text-center p-4">
             <h2 class="mb-4">QR Code Generated Successfully!</h2>
             

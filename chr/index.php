@@ -6,9 +6,7 @@
         $host = $_SERVER['HTTP_HOST'];
         $base_url = $protocol . '://' . $host ."/ams/chr";
         define("BASE_URL", $base_url);
-        
         $root = $_SERVER["DOCUMENT_ROOT"];
-        
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +30,7 @@
     <input id="cashier_id" type="hidden" value="<?php echo $_SESSION['cashier_id']?>">
     <div class="container-fluid mt-1" >
         <div class="d-flex flex-row gap-1 ">
-            <div class="card w-25 border-1" style="height: calc(90vh - (1rem * 3));">
+            <div class="card w-50 border-1" style="height: calc(90vh - (1rem * 3));">
                 <div class="card-header">Scan Result</div>
                 <div class="card-body">
                     <div class="user-cred">
@@ -47,12 +45,12 @@
                     </div>
                     <div class="payment-amount">Amount: <span id="payment-amount"></span></div>
                 </div>
-                <div class="card-footer action d-flex align-items-center justify-content-evenly">
+                <div class="card-footer action d-flex align-items-center justify-content-end gap-1">
                     <button id="rescan" class="btn btn-secondary">Rescan</button>
                     <button id="approve" class="btn btn-primary">Approve</button>
                 </div>
             </div>
-            <div class="container w-75 d-flex justify-content-center align-items-center border">
+            <div class="container w-75 d-flex justify-content-center align-items-center">
                 <div id="reader" class="hide object-fit-cover"></div>
                 <div id="start-scan-btn" class="btn btn-primary">Start Scanning</div>
                 <!--<input type="file" id="qr-input-file" accept="image/*">-->
@@ -61,6 +59,7 @@
     </div>
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo BASE_URL;?>/node_modules/html5-qrcode/html5-qrcode.min.js"></script>
+    <script src="script/fetchItems.js"></script>
     <script src="script/reader.js"></script>
 </body>
 </html>

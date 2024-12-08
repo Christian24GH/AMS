@@ -43,10 +43,13 @@
         justify-content: center;
         display: flex;
         flex-direction: column;
+        gap: .5rem;
     }
     .fc-toolbar-chunk:last-of-type .fc-button-group{
-        width: 100%;
+        width: 300px;
+        max-height: calc(300px - 1rem);
         margin: 0;
+        font-size: 70%;
     }
     .fc-button-group{
         display: flex !important;
@@ -54,5 +57,20 @@
     .fc-button-group .fc-button{
         flex:1 !important;
         width: 30%;
+    }
+    .slotEl{
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: safe;
+    }
+    #calendarparent{
+        width: 100% !important;
+        margin-left: 0 !important; 
+        margin-right: 0 !important;
+        padding-left: 0 !important; 
+        padding-right: 0 !important;
+    }
+    #calendar{
+        width: 100% !important;
     }
 }

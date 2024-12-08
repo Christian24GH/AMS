@@ -40,10 +40,10 @@
             </div>
         </div>
     </div>
-    <div class="container p-2 ps-4 my-1 bg-body border-top" style="height: 3rem;">
-        <a class="features d-flex align-items-center outline-none gap-1" href="<?php echo BASE_URL;?>/global/components/logout.php">
+    <div class="container p-2 ps-4 my-1 bg-transparent d-flex justify-content-start" style="height: 3rem;">
+        <a class="features d-flex justify-content-start align-items-center outline-none gap-1" href="<?php echo BASE_URL;?>/global/components/logout.php">
             <img src="<?php echo BASE_URL;?>/global/icons/logout.svg" alt="">
-            Logout
+            <span class="me-2">Logout</span>
         </a>
     </div>
 </div>

@@ -22,12 +22,10 @@
                 <img src="<?php echo BASE_URL;?>/global/icons/home-2.svg" alt="">
                 <a class="outline-none" href="<?php echo BASE_URL;?>/">Scanner</a>
             </div>
-            <!--
             <div class="features container w-100 p-2 my-1">
                 <img src="<?php echo BASE_URL;?>/global/icons/invoice.svg" alt="">
                 <a class="outline-none" href="<?php echo BASE_URL;?>/transaction.php">Transaction Log</a>
             </div>
-            -->
         </div>
     </div>
     <div class="container p-2 ps-4 my-1 bg-body border-top" style="height: 3rem;">

@@ -26,7 +26,7 @@
         include "$root/AMS/client/global/components/header.php";
         include "$root/AMS/client/global/components/left_nav.php";
     ?>
-    <div class="container my-5 d-flex justify-content-center">
+    <div class="container d-flex justify-content-center margin-top-5">
 
         <input id="stud_id" type="hidden" value="<?php echo $_SESSION['stud_id']?>">
         <div class="w-100">

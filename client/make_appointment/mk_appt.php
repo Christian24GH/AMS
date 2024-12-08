@@ -1,4 +1,4 @@
-<div id='mk_appt' class="mk_appt m-0">
+<div id='mk_appt' class="mk_appt m-0 w-100">
     <form id="clientForm">
         <div class="text-inputs">
             <div class="card-header d-flex justify-content-center poppins-semibold">Appointment Information</div>
@@ -7,11 +7,6 @@
                     <label for="studId" class="poppins-medium">Student ID</label>
                     <input type="text" class="form-control p-3" id="studId" value='<?php echo $_SESSION['stud_id']?>' placeholder="<?php echo $_SESSION['stud_id']?>" disabled>
                 </div>
-                <div class="mb-3">
-                    <label for="amount" class="poppins-medium">Amount</label>
-                    <input type="text" class="form-control p-3" id="amount" placeholder="Amount" required>
-                </div>
-
                 <div class="mb-3">
                     <label for="appt_date" class="poppins-medium">Appointment Date</label>
                     <input id='appt_date' type="date" class="form-control p-3" disabled>
@@ -25,7 +20,10 @@
                         <option value="Afternoon">Afternoon Shift 11:00am - 5:00pm</option>
                     </select>
                 </div>
-
+                <div class="mb-3">
+                    <label for="amount" class="poppins-medium">Amount</label>
+                    <input type="text" class="form-control p-3" id="amount" placeholder="Amount" required disabled>
+                </div>
                 <label for="" class="poppins-medium">Payable items</label>
                 <div class="accordion mb-5 mw-25 mw-100" id="accordionFlushExample">
                     <div class="accordion-item">

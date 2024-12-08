@@ -28,7 +28,7 @@
         include "$root/ams/client/global/components/left_nav.php";
         include "$root/ams/client/global/components/loading.php";
     ?>
-    <div class="container-fluid my-3 d-flex justify-content-center flex-column align-items-center">
+    <div class="container-fluid d-flex justify-content-center flex-column align-items-center margin-top-5">
         <input id="appt_id" type="hidden" value="<?php echo $appt_id;?>">
         <h4>Appointment Information</h4>
         <div id='appointment_info' class="container d-flex justify-content-start gap-2">

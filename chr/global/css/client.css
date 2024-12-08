@@ -90,12 +90,21 @@ body{
 .features img{
     width: 2em;
 }
-.features:hover *, .features:hover{
-    color: var(--Accent);
-    transition: all 0.2s ease-in-out;
+.features{
+    border-radius: 1rem;
+}
+.features:hover{
+    background-color: #0004d3;
+    color: var(--Text-dark);
+    transition: all .2s linear;
+}
+.features *{
+    background-color: transparent;
+}
+.features:hover *{
+    color: white;
 }
 .features:hover img{
-    transform: scale(120%, 120%);
-    margin-right: 1rem;
+    filter: invert(100%) sepia(38%) saturate(0%) hue-rotate(40deg) brightness(103%) contrast(104%); 
 }
 

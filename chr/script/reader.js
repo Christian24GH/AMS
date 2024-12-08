@@ -72,11 +72,22 @@ async function display_result(transaction) {
     student_name.appendChild(document.createTextNode(name));
     payment_amount.appendChild(document.createTextNode(transaction["amount"]));
     appointment_id.appendChild(document.createTextNode(transaction["appointment_id"]));
+    
+    
+    const inventory = JSON.parse(window.sessionStorage.getItem("inventory"));
     transaction["items"].forEach(el => {
-        item_list.appendChild(document.createTextNode(el));
-        item_list.appendChild(document.createElement("br"));
-    });
+        const item = inventory.find(item => item.item_id == el);
 
+        if (item) {
+            const name = item.item_name;
+            console.log(name);
+            
+            item_list.appendChild(document.createTextNode(name));
+            item_list.appendChild(document.createElement("br"));
+        }
+    });
+    console.log(transaction["items"]);
+    console.log(inventory);
     studObj["appointment_id"] = transaction["appointment_id"];
     studObj["studID"] = transaction["studID"];
     studObj["studLN"] = fullname['stud_ln'];

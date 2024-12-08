@@ -33,7 +33,7 @@ function initializeCalendar() {
         timeZone: 'UTC',
         themeSystem: "bootstrap5",
         initialView: 'dayGridMonth',
-        expandRows: true,
+        expandRows: false,
         nowIndicator: true,
         validRange: {
             start: startDate.toISOString().split('T')[0],
@@ -46,15 +46,29 @@ function initializeCalendar() {
         dayCellDidMount: function (info) {
             let container = info.el.querySelectorAll(".fc-daygrid-day-bottom");
             let containerDate = info.date.toISOString().split('T')[0];
-            console.log('Date:', info.date.toISOString().split('T')[0]);
             
             const slotData = slotsData.find(data => data.date === containerDate);
             
-            container.forEach(el=>{
-                if(slotData){
-                        el.textContent = `Slots: ${slotData.slot}/600`;
-                }
-            })
+           // Get today's date in YYYY-MM-DD format
+            let today = new Date();
+            today.setDate(today.getDate()+1);
+            // Only display the upcoming day slot
+            if (containerDate >= today.toISOString().split('T')[0]) { // Compare the current day
+                container.forEach(el => {
+                    if (slotData) {
+                        let div = document.createElement('div');
+                        let left = document.createElement('div');
+                        let right = document.createElement('div');
+                        left.textContent = `Slots`;
+                        right.textContent = `${slotData.slot}/600`;
+                        div.append(left);
+                        div.append(right);
+                        div.classList.add('slotEl', "rounded-1", "p-1", "bg-info-subtle", "text-info-emphasis");
+                        el.append(div);
+                        
+                    }
+                });
+            }
         },
         selectAllow: function (date) {
             return date.start.getDay() !== 0;
@@ -80,17 +94,31 @@ function initializeCalendar() {
         },
         dateClick: function (date) {
             const clickedDate = new Date(date.dateStr);
+        
             if (clickedDate.getDay() !== 0) {
                 const appt_date = document.getElementById("appt_date");
                 const myModal = new bootstrap.Modal(document.getElementById('appt'));
-
-                const eventDate = date.dateStr;
-                if (!datesWithEvents.has(eventDate)) {
-                    appt_date.value = date.dateStr;
-                    myModal.show();
-                } else {
-                    alert('You have pending appointments on that date!');
+        
+                // Find slot data for the clicked date
+                const slotData = slotsData.find(data => data.date === date.dateStr);
+        
+                // Check if slots are full
+                if (slotData && slotData.slot >= 600) {
+                    alert("No slots left for this date.");
+                    return;
                 }
+        
+                const eventDate = date.dateStr;
+        
+                // Check if the user already has an appointment on this date
+                if (datesWithEvents && datesWithEvents.has(eventDate)) {
+                    alert('You have pending appointments on that date!');
+                    return;
+                }
+        
+                // Proceed to open the modal
+                appt_date.value = eventDate;
+                myModal.show();
             }
         },
     });

@@ -30,18 +30,24 @@ const transactionInfo = {
 document.getElementById("clientForm").addEventListener("submit", (e)=>{
     e.preventDefault();
     let studId = document.getElementById("studId").value;
-    let amount = document.getElementById("amount").value;
+    let amountEl = document.getElementById("amount").value;
     let appt_date = document.getElementById("appt_date").value;
     let appt_shift = document.getElementById("appt_shift").value;
     let checkboxes = Array.from(document.querySelectorAll("input[type='checkbox']:checked")).map((elem) => elem.value);
     
-    transactionInfo.appointmentID = generateUUID();
-    console.log(transactionInfo.appointmentID);
-    transactionInfo.studID = parseInt(studId, 10);
-    transactionInfo.amount = parseFloat(amount).toFixed(2);
-    transactionInfo.items = checkboxes;
-    transactionInfo.date = appt_date;
-    transactionInfo.shift = appt_shift;
-    handleAppointment(transactionInfo);
+    let totalAmount = 0;
+    totalAmount = Number(amountEl);
+
+    if(totalAmount !== 0){
+        transactionInfo.appointmentID = generateUUID();
+        transactionInfo.studID = parseInt(studId, 10);
+        transactionInfo.amount = parseFloat(totalAmount).toFixed(2);
+        transactionInfo.items = checkboxes;
+        transactionInfo.date = appt_date;
+        transactionInfo.shift = appt_shift;
+        handleAppointment(transactionInfo);
+    }else{
+        alert("Add Items before submitting");
+    }
 })
 

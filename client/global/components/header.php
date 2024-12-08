@@ -1,4 +1,4 @@
-<nav id='ams_header' class='navbar navbar-expand-lg p-0'>
+<nav id='ams_header' class='navbar navbar-expand-lg p-0 position-fixed w-100 top-0 z-2'>
     <div class="container-fluid">
         <div class='menu-btn' type="button" data-bs-toggle="offcanvas" data-bs-target="#left_nav">
             <svg id="burger" class="burger" width="100px" height="100px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">

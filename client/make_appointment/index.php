@@ -30,8 +30,8 @@
             
     ?>
     <input id='uid' type="hidden" value="<?php echo $_SESSION['stud_id']?>">
-    <div class="modal fade" id="appt" tabindex="-1">
-        <div class="modal-dialog">
+    <div class="modal fade modal-lg" id="appt" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add Appointment</h1>
@@ -46,14 +46,15 @@
         </div>
     </div>
     
-    <div class="container-fluid d-flex flex-column justify-content-end m-0 p-2 align-items-center">
-        <h3 class='text-center mt-3'>Add Appointment Schedule</h3>
-        <div id="calendar" class="w-100"></div>    
+    <h3 class='text-center margin-top-5'>Add Appointment Schedule</h3>
+    <div id="calendarparent" class="card w-100 d-flex flex-column justify-content-end p-2 align-items-center">
+        <div id="calendar" class=""></div>    
     </div>
     
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <script src='js/qr.js'></script>
+    <script src='js/calculate_amount.js'></script>
     <script type='module' src='js/calendarInit.js'></script>
 </body>
 </html>

@@ -6,9 +6,7 @@
         $host = $_SERVER['HTTP_HOST'];
         $base_url = $protocol . '://' . $host ."/ams/chr";
         define("BASE_URL", $base_url);
-        
         $root = $_SERVER["DOCUMENT_ROOT"];
-        
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +27,14 @@
         include $root . '/ams/chr/global/components/header.php';
         include $root . '/ams/chr/global/components/left_nav.php';
     ?>
-    transactions
+    <div class="container mt-5">
+        <h5>Transactions</h5>
+        <ul class="list-group">
+        <?php
+            include $root . '/ams/chr/script/fetch/get_transaction.php';
+        ?>
+        </ul>
+    </div>
     <script src="<?php echo BASE_URL;?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script/transactionlist.js"></script>
 </body>

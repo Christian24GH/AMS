@@ -11,6 +11,6 @@
                 </g>
             </svg>
         </div>
-        <a class="brand navbar-brand poppins-semibold" href='<?php echo BASE_URL;?>/dashboard/index.php'>AMS</a>
+        <a class="brand navbar-brand poppins-semibold" href='<?php echo BASE_URL;?>'>AMS</a>
     </div>
 </nav>

@@ -26,7 +26,7 @@
         include "$root/AMS/client/global/components/header.php";
         include "$root/AMS/client/global/components/left_nav.php";
     ?>
-    <div class="container my-5 d-flex justify-content-center">
+    <div class="container margin-top-5 d-flex justify-content-center">
         <div class="schedules w-100">
         <h2>Transaction Log</h2>
         <div id="sched_list" class="sched_list list-group list-group-numbered gap-2">

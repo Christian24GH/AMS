@@ -19,7 +19,7 @@
             echo "  
                     <div class='input-group w-100 mb-2' style=''>
                         <div class='input-group-text'>
-                            <input class='checkboxItem form-check-input mt-0 item_checkbox' type='checkbox' value='{$row['item_id']}'/>
+                            <input class='checkboxItem form-check-input mt-0 item_checkbox' type='checkbox' name='cbox' data-name='{$row['item_name']}' value='{$row['item_id']}'/>
                         </div>
                         <label type='text' class='form-control d-flex flex-wrap' style='font-size: 0.9em;'>{$row['item_name']}</label>
                     </div>

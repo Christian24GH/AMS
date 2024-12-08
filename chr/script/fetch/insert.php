@@ -40,7 +40,7 @@
                 $_POST["amount"] ?? 0,
                 $_POST["items"] ?? '[]',
                 $_POST["section_id"] ?? 1,
-                $_POST["cashier_id"] ?? 1
+                $_POST["cashier_id"] ?? $_SESSION['cashier_id']
             );
 
             insert_data($transaction, $conn);
